@@ -6,12 +6,16 @@ requires-python = ">=3.11"
 name = "adr-ai-tools-py"
 version = "0.1.0"
 source = { virtual = "." }
-dependencies = [
+
+[package.dev-dependencies]
+dev = [
     { name = "ruff" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ruff", specifier = ">=0.11.10" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "ruff", specifier = ">=0.11.10" }]
 
 [[package]]
 name = "ruff"

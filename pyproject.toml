@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "A Python toolkit leveraging LLM capabilities to assist with creating, searching, and analyzing Architecture Decision Records (ADRs)"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
+dependencies = []
+
+[dependency-groups]
+dev = [
     "ruff>=0.11.10",
 ]
