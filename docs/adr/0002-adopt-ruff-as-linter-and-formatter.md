@@ -4,13 +4,13 @@
 Adopt Ruff as Python Linter and Formatter
 
 ## Status
-Accepted
+Proposed
 
 ## Date
 2025-05-17
 
 ## Context
-The adr-ai-tools-py project requires consistent code quality and style across all code contributions. We need a tool that can:
+The adr-ai-tools-py project requires consistent code quality and style across all code contributions. Currently, we do not have standardized linting or formatting tools in place, which has led to inconsistencies in code style and quality. We need a tool that can:
 
 - Enforce coding standards and identify potential issues
 - Format code consistently across the project
@@ -19,10 +19,10 @@ The adr-ai-tools-py project requires consistent code quality and style across al
 - Support our Python 3.11+ requirement
 - Work well with our chosen dependency manager (UV)
 
-Previously, Python projects often required multiple tools such as flake8 for linting, black for formatting, isort for import sorting, and additional plugins for more specialized checks. This fragmentation creates complexity in configuration and can lead to inconsistent enforcement of standards.
+Traditionally, Python projects often require multiple tools such as flake8 for linting, black for formatting, isort for import sorting, and additional plugins for more specialized checks. This fragmentation creates complexity in configuration and can lead to inconsistent enforcement of standards.
 
 ## Decision
-We have decided to adopt Ruff as our primary Python linter and formatter for the adr-ai-tools-py project.
+We propose to adopt Ruff as our primary Python linter and formatter for the adr-ai-tools-py project.
 
 ## Rationale
 Ruff was selected for the following reasons:
@@ -33,7 +33,7 @@ Ruff was selected for the following reasons:
 - **Extensibility**: Ruff supports a wide range of rules, including those from flake8 plugins, providing comprehensive code quality checks.
 - **Modern Standards**: Ruff fully supports modern Python features and has good compatibility with Python 3.11+.
 - **Active Development**: Ruff has an active development community with regular updates and improvements.
-- **IDE Integration**: Ruff works well with popular IDEs and editors used by our team.
+- **VSCode Integration**: Ruff has excellent integration with Visual Studio Code, which is the primary IDE used by our team.
 - **Configuration**: Ruff configuration is straightforward and can be included in our pyproject.toml file.
 
 ## Implications
@@ -49,7 +49,8 @@ Ruff was selected for the following reasons:
 - Ruff is relatively newer compared to established tools like flake8 or pylint
 - Some team members may need to adjust to Ruff-specific rules and configuration
 - Certain specialized linting rules may not yet be available in Ruff
-- Migration from other tools may require adjustments to existing code
+- Initial setup and configuration will require time and effort
+- Need to establish standards for rule exceptions and configuration
 
 ## Alternatives
 ### flake8 + black + isort
@@ -73,15 +74,14 @@ Ruff was selected for the following reasons:
 - **Rejection Reason**: Too specialized; we still need Ruff for other linting tasks (Note: We may adopt mypy alongside Ruff in the future specifically for type checking)
 
 ## Future Direction
-- Create standardized Ruff configurations for the project
+- Create initial Ruff configuration in pyproject.toml
 - Document Ruff usage in the contributor guidelines
 - Set up pre-commit hooks to run Ruff automatically
 - Integrate Ruff checks into our CI/CD pipeline
-- Periodically update Ruff to take advantage of new rules and improvements
+- Update our development environment setup documentation to include Ruff installation
 - Consider adding mypy for static type checking to complement Ruff's capabilities
 
 ## References
 - Ruff documentation: https://github.com/astral-sh/ruff
 - Performance benchmarks comparing Ruff to other linting/formatting tools
-- Current project setup with Ruff configuration in pyproject.toml
 - Team discussions about code quality enforcement requirements
