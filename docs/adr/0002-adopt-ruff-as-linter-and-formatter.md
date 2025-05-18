@@ -29,7 +29,7 @@ Ruff was selected for the following reasons:
 
 - **Performance**: Ruff is implemented in Rust, making it significantly faster than traditional Python-based tools like flake8, pylint, or black.
 - **Consolidation**: Ruff combines linting, formatting, and import sorting in a single tool, reducing the number of dependencies and configuration files needed.
-- **Compatibility**: Ruff is designed to be compatible with popular tools like flake8 and black, making migration straightforward.
+- **Compatibility**: Ruff is designed to be compatible with popular tools like flake8 and black, which means we can easily adopt configurations and standards from established tools in the Python ecosystem.
 - **Extensibility**: Ruff supports a wide range of rules, including those from flake8 plugins, providing comprehensive code quality checks.
 - **Modern Standards**: Ruff fully supports modern Python features and has good compatibility with Python 3.11+.
 - **Active Development**: Ruff has an active development community with regular updates and improvements.
