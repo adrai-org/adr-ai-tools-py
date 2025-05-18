@@ -82,6 +82,5 @@ Ruff was selected for the following reasons:
 - Consider adding mypy for static type checking to complement Ruff's capabilities
 
 ## References
-- Ruff documentation: https://github.com/astral-sh/ruff
-- Performance benchmarks comparing Ruff to other linting/formatting tools
-- Team discussions about code quality enforcement requirements
+- [Ruff documentation](https://github.com/astral-sh/ruff)
+- [Performance benchmarks comparing Ruff to other linting/formatting tools](https://github.com/astral-sh/ruff/blob/main/README.md)
