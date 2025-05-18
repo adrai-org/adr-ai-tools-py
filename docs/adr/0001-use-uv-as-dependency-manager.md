@@ -75,7 +75,7 @@ UV was selected for the following reasons:
 - Periodically reassess this decision if UV development slows or issues arise
 
 ## References
-- UV documentation and GitHub repository
-- Performance benchmarks comparing UV to other package managers
-- Team discussions about dependency management requirements
-- Project requirements for reproducible builds and development workflows
+- [UV documentation and GitHub repository](https://docs.astral.sh/uv/)
+- [Performance benchmarks comparing UV to other package managers](https://github.com/astral-sh/uv/blob/main/BENCHMARKS.md)
+- Team discussions about dependency management requirements (no links available)
+- [Project requirements for reproducible builds and development workflows](https://docs.astral.sh/uv/concepts/projects/layout/#the-lockfile)
