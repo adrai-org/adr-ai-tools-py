@@ -7,7 +7,7 @@ Use UV as Python Dependency Management Tool
 Accepted
 
 ## Date
-2025-05-11
+2025-05-10
 
 ## Context
 The adr-ai-tools-py project requires a robust dependency management solution for Python that ensures:
@@ -77,4 +77,4 @@ UV was selected for the following reasons:
 ## References
 - [UV documentation and GitHub repository](https://docs.astral.sh/uv/)
 - [Performance benchmarks comparing UV to other package managers](https://github.com/astral-sh/uv/blob/main/BENCHMARKS.md)
-- Team discussions about dependency management requirements (no links available)
+- Team discussions about dependency management requirements (2025-05-10 Engineering Team Meeting, summary available internally)
