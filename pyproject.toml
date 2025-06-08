@@ -16,7 +16,7 @@ version = {attr = "adraitools.__version__"}
 [project.scripts]
 adr-ai-tools = "adraitools.cli:main"
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "pytest>=8.3.5",
     "ruff>=0.11.10",
