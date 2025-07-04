@@ -67,7 +67,6 @@ This approach was selected because:
 ## Future Direction
 - Monitor for new Ruff rules and evaluate their inclusion
 - Consider adding mypy for static type checking (referenced in ADR-0002)
-- Evaluate integration with pre-commit hooks for additional automation
 - Assess whether test-specific security rules need project-specific configuration
 - Periodically review and update rule exceptions as the project evolves
 
