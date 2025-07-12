@@ -4,9 +4,12 @@ import shutil
 from pathlib import Path
 from subprocess import run
 
+import pytest
+
 import adraitools
 
 
+@pytest.mark.e2e
 def test_cli_print_version(project_dir: Path) -> None:
     """Test that the CLI prints the version."""
     cmd_path_str = shutil.which("adr-ai-tools")
