@@ -20,6 +20,8 @@ adr-ai-tools = "adraitools.cli:main"
 dev = [
     "mypy>=1.16.1",
     "pytest>=8.3.5",
+    "pytest-cov>=6.2.1",
+    "pytest-mock>=3.14.1",
     "ruff>=0.11.10",
 ]
 
@@ -67,3 +69,23 @@ warn_no_return = true
 warn_unreachable = true
 strict_equality = true
 show_error_codes = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "src"]
+python_files = ["test_*.py", "*_test.py"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--doctest-modules",
+    "--cov=src/adraitools",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-fail-under=80",
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests", 
+    "e2e: End-to-end tests",
+    "slow: Slow running tests",
+]
