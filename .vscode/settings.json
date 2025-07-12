@@ -2,6 +2,7 @@
     "python.defaultInterpreter": "python",
     "python.linting.enabled": true,
     "python.linting.ruffEnabled": true,
+    "python.linting.mypyEnabled": true,
     "python.formatting.provider": "none",
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
