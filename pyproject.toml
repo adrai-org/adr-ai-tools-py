@@ -18,6 +18,7 @@ adr-ai-tools = "adraitools.cli:main"
 
 [dependency-groups]
 dev = [
+    "nox>=2025.5.1",
     "pytest>=8.3.5",
     "ruff>=0.11.10",
 ]
