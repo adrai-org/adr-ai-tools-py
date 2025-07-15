@@ -12,14 +12,14 @@ PYTHON_VERSIONS = ["3.9", "3.10", "3.11", "3.12", "3.13"]
 def tests_unit(session: nox.Session) -> None:
     """Run unit and integration tests (not e2e)."""
     session.install("-e", ".", "--group=dev")
-    session.run("pytest", "-m", "not e2e")
+    session.run("uv", "run", "--active", "pytest", "-m", "not e2e")
 
 
 @nox.session(python="3.11")
 def tests_e2e(session: nox.Session) -> None:
     """Run e2e tests."""
     session.install("-e", ".", "--group=dev")
-    session.run("pytest", "-m", "e2e")
+    session.run("uv", "run", "--active", "pytest", "-m", "e2e")
 
 
 @nox.session(python="3.11")
@@ -27,6 +27,9 @@ def tests(session: nox.Session) -> None:
     """Run all tests with coverage reporting."""
     session.install("-e", ".", "--group=dev")
     session.run(
+        "uv",
+        "run",
+        "--active",
         "pytest",
         "--cov=src/adraitools",
         "--cov-report=term-missing",
@@ -39,42 +42,42 @@ def tests(session: nox.Session) -> None:
 def tests_all_versions(session: nox.Session) -> None:
     """Run all tests across all supported Python versions."""
     session.install("-e", ".", "--group=dev")
-    session.run("pytest")
+    session.run("uv", "run", "--active", "pytest")
 
 
 @nox.session(python="3.11")
 def mypy(session: nox.Session) -> None:
     """Run mypy type checking."""
     session.install("-e", ".", "--group=dev")
-    session.run("mypy", "src/", "tests/")
+    session.run("uv", "run", "--active", "mypy", "src/", "tests/")
 
 
 @nox.session(python="3.11")
 def lint(session: nox.Session) -> None:
     """Run ruff linting."""
     session.install("-e", ".", "--group=dev")
-    session.run("ruff", "check", ".")
+    session.run("uv", "run", "--active", "ruff", "check", ".")
 
 
 @nox.session(python="3.11")
 def format_code(session: nox.Session) -> None:
     """Run ruff formatting."""
     session.install("-e", ".", "--group=dev")
-    session.run("ruff", "format", ".")
+    session.run("uv", "run", "--active", "ruff", "format", ".")
 
 
 @nox.session(python="3.11")
 def quality(session: nox.Session) -> None:
     """Run all code quality checks (mypy, ruff)."""
     session.install("-e", ".", "--group=dev")
-    session.run("mypy", "src/", "tests/")
-    session.run("ruff", "check", ".")
+    session.run("uv", "run", "--active", "mypy", "src/", "tests/")
+    session.run("uv", "run", "--active", "ruff", "check", ".")
 
 
 @nox.session(python="3.11")
 def check_all(session: nox.Session) -> None:
     """Run all checks and tests."""
     session.install("-e", ".", "--group=dev")
-    session.run("pytest")
-    session.run("mypy", "src/", "tests/")
-    session.run("ruff", "check", ".")
+    session.run("uv", "run", "--active", "pytest")
+    session.run("uv", "run", "--active", "mypy", "src/", "tests/")
+    session.run("uv", "run", "--active", "ruff", "check", ".")

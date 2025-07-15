@@ -8,7 +8,10 @@ dynamic = ["version"]
 description = "A Python toolkit leveraging LLM capabilities to assist with creating, searching, and analyzing Architecture Decision Records (ADRs)"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "pydantic>=2.11.7",
+    "typer>=0.16.0",
+]
 
 [tool.setuptools.dynamic]
 version = {attr = "adraitools.__version__"}
@@ -20,10 +23,12 @@ adr-ai-tools = "adraitools.cli:main"
 dev = [
     "mypy>=1.16.1",
     "nox>=2025.5.1",
+    "pexpect>=4.9.0",
     "pytest>=8.3.5",
     "pytest-cov>=6.2.1",
     "pytest-mock>=3.14.1",
     "ruff>=0.11.10",
+    "types-pexpect>=4.9.0.20250516",
 ]
 
 [tool.ruff]
