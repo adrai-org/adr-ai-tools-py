@@ -1,6 +1,7 @@
 """Unit tests for configuration service."""
 
 import tempfile
+from collections.abc import Generator
 from pathlib import Path
 
 import pytest
@@ -11,6 +12,25 @@ from adraitools.models.configuration import AdrConfiguration
 from adraitools.services.configuration_service import ConfigurationService
 
 
+@pytest.fixture
+def _mock_home_directory(mocker: MockerFixture) -> Generator[Path, None, None]:
+    """Mock the home directory for testing."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        mocker.patch("pathlib.Path.home", return_value=Path(tmpdir))
+        yield Path(tmpdir)
+
+
+@pytest.fixture
+def _mock_current_working_directory(
+    mocker: MockerFixture,
+) -> Generator[Path, None, None]:
+    """Mock the current working directory for testing."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        mocker.patch("pathlib.Path.cwd", return_value=Path(tmpdir))
+        yield Path(tmpdir)
+
+
+@pytest.mark.usefixtures("_mock_home_directory", "_mock_current_working_directory")
 def test_get_configuration_returns_adr_configuration() -> None:
     """Test that get_configuration returns an AdrConfiguration instance."""
     service = ConfigurationService()
@@ -21,6 +41,7 @@ def test_get_configuration_returns_adr_configuration() -> None:
     assert config.template_file.name == "0000-adr-template.md"
 
 
+@pytest.mark.usefixtures("_mock_home_directory", "_mock_current_working_directory")
 def test_get_value_returns_configuration_attribute() -> None:
     """Test that get_value returns the correct configuration attribute."""
     service = ConfigurationService()

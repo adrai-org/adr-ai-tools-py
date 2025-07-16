@@ -48,6 +48,7 @@ author_name = "Global Author"
 
         # Mock user home directory
         mocker.patch("pathlib.Path.home", return_value=Path(tmpdir))
+        mocker.patch("pathlib.Path.cwd", return_value=Path(tmpdir))
         config = AdrConfiguration()
 
         assert config.adr_directory == Path("global/adr")

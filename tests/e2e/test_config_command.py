@@ -9,9 +9,10 @@ from pytest_mock import MockerFixture
 
 
 @pytest.mark.e2e
-def test_config_list_command_shows_default_values() -> None:
+def test_config_list_command_shows_default_values(mocker: MockerFixture) -> None:
     """Test that config list command shows default configuration values."""
     with tempfile.TemporaryDirectory() as tmpdir:
+        mocker.patch.dict("os.environ", {"HOME": tmpdir})
         # Run config list command in temp directory
         child = pexpect.spawn("uv run adr-ai-tools config list", cwd=tmpdir)
         child.expect_exact("adr_directory: docs/adr")
@@ -24,9 +25,10 @@ def test_config_list_command_shows_default_values() -> None:
 
 
 @pytest.mark.e2e
-def test_config_get_command_returns_specific_value() -> None:
+def test_config_get_command_returns_specific_value(mocker: MockerFixture) -> None:
     """Test that config get command returns a specific configuration value."""
     with tempfile.TemporaryDirectory() as tmpdir:
+        mocker.patch.dict("os.environ", {"HOME": tmpdir})
         # Run config get command for adr_directory
         child = pexpect.spawn(
             "uv run adr-ai-tools config get adr_directory", cwd=tmpdir
