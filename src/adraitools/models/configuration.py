@@ -9,6 +9,8 @@ from pydantic_settings import (
     TomlConfigSettingsSource,
 )
 
+from adraitools.constants import PathConstants
+
 
 class AdrConfiguration(BaseSettings):
     """Configuration settings for ADR AI Tools."""
@@ -34,14 +36,12 @@ class AdrConfiguration(BaseSettings):
         config_files = []
 
         # Project-local configuration (highest precedence)
-        current_dir = Path.cwd()
-        project_config = current_dir / ".adr-ai-tools" / "config.toml"
+        project_config = PathConstants.get_local_config_file()
         if project_config.exists():
             config_files.append(project_config)
 
         # Global configuration (lower precedence)
-        home_dir = Path.home()
-        global_config = home_dir / ".config" / "adr-ai-tools" / "config.toml"
+        global_config = PathConstants.get_global_config_file()
         if global_config.exists():
             config_files.append(global_config)
 
@@ -63,6 +63,6 @@ class AdrConfiguration(BaseSettings):
             file_secret_settings,
         )
 
-    adr_directory: Path = Path("docs/adr")
-    template_file: Path = Path("docs/adr/0000-adr-template.md")
+    adr_directory: Path = PathConstants.DEFAULT_ADR_DIRECTORY
+    template_file: Path = PathConstants.DEFAULT_TEMPLATE_FILE
     author_name: str = ""

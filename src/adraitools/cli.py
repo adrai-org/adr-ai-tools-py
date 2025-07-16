@@ -10,6 +10,7 @@ from adraitools.services.adr_initializer import AdrInitializer
 from adraitools.services.configuration_service import ConfigurationService
 from adraitools.services.file_system_service import FileSystemService
 from adraitools.services.user_interaction_service import UserInteractionService
+from adraitools.utils.cli_error_handling import handle_command_errors
 
 app = typer.Typer(help="ADR AI Tools - Architecture Decision Records toolkit")
 config_app = typer.Typer(help="Configuration management commands")
@@ -78,18 +79,16 @@ def list_config() -> None:
 
 
 @config_app.command()
+@handle_command_errors
 def get(key: str) -> None:
     """Get a specific configuration value."""
     config_service = ConfigurationService()
-    try:
-        value = config_service.get_value(key)
-        typer.echo(str(value))
-    except KeyError as e:
-        typer.echo(f"Error: {e}")
-        sys.exit(1)
+    value = config_service.get_value(key)
+    typer.echo(str(value))
 
 
 @config_app.command(name="set")
+@handle_command_errors
 def set_config(
     key: str,
     value: str,
@@ -102,13 +101,9 @@ def set_config(
 ) -> None:
     """Set a configuration value."""
     config_service = ConfigurationService()
-    try:
-        config_service.set_value(key, value, global_config=global_config)
-        scope = "global" if global_config else "project-local"
-        typer.echo(f"Configuration updated ({scope}): {key} = {value}")
-    except KeyError as e:
-        typer.echo(f"Error: {e}")
-        sys.exit(1)
+    config_service.set_value(key, value, global_config=global_config)
+    scope = "global" if global_config else "project-local"
+    typer.echo(f"Configuration updated ({scope}): {key} = {value}")
 
 
 if __name__ == "__main__":

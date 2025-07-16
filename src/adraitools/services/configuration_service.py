@@ -1,12 +1,9 @@
 """Configuration management service."""
 
-from pathlib import Path
-from typing import Any, get_origin
-
-import tomli
-import tomli_w
-
+from adraitools.constants import ErrorMessages, PathConstants
 from adraitools.models.configuration import AdrConfiguration
+from adraitools.services.toml_file_handler import TomlFileHandler
+from adraitools.services.type_converter import TypeConverter
 
 
 class ConfigurationService:
@@ -23,7 +20,7 @@ class ConfigurationService:
     def get_value(self, key: str) -> str:
         """Get a specific configuration value as string for CLI display."""
         if not hasattr(self.configuration, key):
-            msg = f"Unknown configuration key '{key}'"
+            msg = ErrorMessages.UNKNOWN_CONFIG_KEY.format(key=key)
             raise KeyError(msg)
         value = getattr(self.configuration, key)
         return str(value)
@@ -31,42 +28,18 @@ class ConfigurationService:
     def set_value(self, key: str, value: str, *, global_config: bool = False) -> None:
         """Set a configuration value."""
         if not hasattr(self.configuration, key):
-            msg = f"Unknown configuration key '{key}'"
+            msg = ErrorMessages.UNKNOWN_CONFIG_KEY.format(key=key)
             raise KeyError(msg)
 
-        # Convert string value to appropriate type based on field type
-        field_info = AdrConfiguration.model_fields[key]
-        field_type = field_info.annotation
+        # Convert string value to appropriate type and back to string for storage
+        converted_value = TypeConverter.convert_config_value(key, value)
 
-        if field_type == Path or get_origin(field_type) is Path:
-            converted_value: Any = Path(value)
-        else:
-            converted_value = value
+        # Choose config file location
+        config_file = (
+            PathConstants.get_global_config_file()
+            if global_config
+            else PathConstants.get_local_config_file()
+        )
 
-        # Prepare config data for saving
-        config_data = {key: str(converted_value)}
-
-        # Choose config location based on global_config flag
-        if global_config:
-            # Global config directory
-            config_dir = Path.home() / ".config" / "adr-ai-tools"
-            config_dir.mkdir(parents=True, exist_ok=True)
-            config_file = config_dir / "config.toml"
-        else:
-            # Project-local config directory
-            config_dir = Path.cwd() / ".adr-ai-tools"
-            config_dir.mkdir(exist_ok=True)
-            config_file = config_dir / "config.toml"
-
-        # Load existing config if it exists
-        existing_config: dict[str, Any] = {}
-        if config_file.exists():
-            with config_file.open("rb") as f:
-                existing_config = tomli.load(f)
-
-        # Update with new value
-        existing_config.update(config_data)
-
-        # Write back to file
-        with config_file.open("wb") as f:
-            tomli_w.dump(existing_config, f)
+        # Save to TOML file
+        TomlFileHandler.update_config_value(key, str(converted_value), config_file)
