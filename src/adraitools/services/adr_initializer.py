@@ -26,13 +26,14 @@ class AdrInitializer:
 
         try:
             # Check if directory already exists
-            if (self.file_system_service.directory_exists(adr_dir)
-                and not self.user_interaction_service.ask_confirmation(
-                    "Directory 'docs/adr' already exists. Continue? (y/N)"
-                )):
-                    return InitializationResult(
-                        success=False, message="Initialization cancelled"
-                    )
+            if self.file_system_service.directory_exists(
+                adr_dir
+            ) and not self.user_interaction_service.ask_confirmation(
+                "Directory 'docs/adr' already exists. Continue? (y/N)"
+            ):
+                return InitializationResult(
+                    success=False, message="Initialization cancelled"
+                )
 
             # Create directory and template file
             self.file_system_service.create_directory(adr_dir)
