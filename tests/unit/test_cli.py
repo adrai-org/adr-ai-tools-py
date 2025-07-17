@@ -20,6 +20,12 @@ def test_init_command_success(mocker: MockerFixture) -> None:
     )
     mock_initializer.initialize.return_value = success_result
 
+    # Mock the ConfigurationService to return predictable values
+    mock_config_service = mocker.patch("adraitools.cli.ConfigurationService")
+    mock_config = mock_config_service.return_value.get_configuration.return_value
+    mock_config.adr_directory = "docs/adr"
+    mock_config.template_file = "docs/adr/0000-adr-template.md"
+
     # Act
     result = runner.invoke(app, ["init"])
 
