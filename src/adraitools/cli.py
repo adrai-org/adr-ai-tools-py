@@ -6,6 +6,7 @@ from typing import Annotated
 import typer
 
 from adraitools import __version__
+from adraitools.models.result import InitializationResult
 from adraitools.services.adr_initializer import AdrInitializer
 from adraitools.services.configuration_service import ConfigurationService
 from adraitools.services.file_system_service import FileSystemService
@@ -48,14 +49,26 @@ def init() -> None:
     # Dependency injection - create service instances
     file_system_service = FileSystemService()
     user_interaction_service = UserInteractionService()
-    initializer = AdrInitializer(file_system_service, user_interaction_service)
+    configuration_service = ConfigurationService()
+    initializer = AdrInitializer(
+        file_system_service, user_interaction_service, configuration_service
+    )
 
     # Execute initialization
     result = initializer.initialize()
 
+    # Handle result and provide user feedback
+    _handle_init_result(result, configuration_service)
+
+
+def _handle_init_result(
+    result: InitializationResult, configuration_service: ConfigurationService
+) -> None:
+    """Handle initialization result and provide appropriate user feedback."""
     if result.success:
-        typer.echo("Created docs/adr/ directory")
-        typer.echo("Generated template: docs/adr/0000-adr-template.md")
+        config = configuration_service.get_configuration()
+        typer.echo(f"Created {config.adr_directory}/ directory")
+        typer.echo(f"Generated template: {config.template_file}")
         typer.echo(
             "Ready to create your first ADR with: "
             'adr-ai-tools new "Your decision title"'

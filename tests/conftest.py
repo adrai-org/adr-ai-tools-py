@@ -1,8 +1,9 @@
 """Shared test fixtures."""
 
 import tempfile
-from collections.abc import Callable, Generator
+from collections.abc import Generator
 from pathlib import Path
+from typing import Protocol
 
 import pytest
 from pytest_mock import MockerFixture
@@ -36,8 +37,16 @@ def mock_current_directory(mocker: MockerFixture) -> Generator[Path, None, None]
         yield tmp_path
 
 
+class ConfigFileFactory(Protocol):
+    """Protocol for configuration file factory."""
+
+    def __call__(self, path: Path, content: dict[str, str]) -> Path:
+        """Create a TOML configuration file with given content."""
+        ...
+
+
 @pytest.fixture
-def config_file_factory() -> Callable[[Path, dict[str, str]], Path]:
+def config_file_factory() -> ConfigFileFactory:
     """Factory for creating test configuration files."""
 
     def _create_config_file(path: Path, content: dict[str, str]) -> Path:
@@ -62,3 +71,12 @@ def sample_config_data() -> dict[str, str]:
         "template_file": "test/template.md",
         "author_name": "Test Author",
     }
+
+
+@pytest.fixture
+def isolated_e2e_env(mocker: MockerFixture) -> Generator[Path, None, None]:
+    """Provide isolated environment for E2E tests with mocked HOME."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        mocker.patch.dict("os.environ", {"HOME": str(tmp_path)})
+        yield tmp_path
