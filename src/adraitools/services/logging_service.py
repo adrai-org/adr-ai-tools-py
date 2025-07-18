@@ -11,7 +11,7 @@ class LoggingService:
     def __init__(self) -> None:
         """Initialize the logging service."""
         self._configured = False
-        self._default_logger: logging.Logger | None = None
+        self._default_logger: logging.Logger
 
     def configure_logging(
         self,
@@ -85,42 +85,32 @@ class LoggingService:
 
         return logging.getLogger(name)
 
-    def log_debug(self, message: str) -> None:
-        """Log a debug message."""
+    def _ensure_configured(self) -> None:
+        """Ensure logging is configured and default logger is available."""
         if not self._configured:
             self.configure_logging()
 
-        if self._default_logger:
-            self._default_logger.debug(message)
+    def log_debug(self, message: str) -> None:
+        """Log a debug message."""
+        self._ensure_configured()
+        self._default_logger.debug(message)
 
     def log_info(self, message: str) -> None:
         """Log an info message."""
-        if not self._configured:
-            self.configure_logging()
-
-        if self._default_logger:
-            self._default_logger.info(message)
+        self._ensure_configured()
+        self._default_logger.info(message)
 
     def log_warning(self, message: str) -> None:
         """Log a warning message."""
-        if not self._configured:
-            self.configure_logging()
-
-        if self._default_logger:
-            self._default_logger.warning(message)
+        self._ensure_configured()
+        self._default_logger.warning(message)
 
     def log_error(self, message: str) -> None:
         """Log an error message."""
-        if not self._configured:
-            self.configure_logging()
-
-        if self._default_logger:
-            self._default_logger.error(message)
+        self._ensure_configured()
+        self._default_logger.error(message)
 
     def log_critical(self, message: str) -> None:
         """Log a critical message."""
-        if not self._configured:
-            self.configure_logging()
-
-        if self._default_logger:
-            self._default_logger.critical(message)
+        self._ensure_configured()
+        self._default_logger.critical(message)
