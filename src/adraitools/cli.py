@@ -1,6 +1,7 @@
 """Command-line interface for ADR AI Tools."""
 
 import sys
+from pathlib import Path
 from typing import Annotated
 
 import typer
@@ -10,6 +11,7 @@ from adraitools.models.result import InitializationResult
 from adraitools.services.adr_initializer import AdrInitializer
 from adraitools.services.configuration_service import ConfigurationService
 from adraitools.services.file_system_service import FileSystemService
+from adraitools.services.logging_service import LoggingService
 from adraitools.services.user_interaction_service import UserInteractionService
 from adraitools.utils.cli_error_handling import handle_command_errors
 
@@ -28,14 +30,33 @@ def version_callback(*, value: bool) -> None:
 @app.callback()
 def callback(
     *,
-    version: Annotated[
+    version: Annotated[  # noqa: ARG001
         bool,
         typer.Option(
             "--version", callback=version_callback, help="Show version and exit"
         ),
     ] = False,
+    verbose: Annotated[
+        bool,
+        typer.Option("--verbose", "-v", help="Enable verbose logging"),
+    ] = False,
+    quiet: Annotated[
+        bool,
+        typer.Option("--quiet", "-q", help="Suppress output"),
+    ] = False,
+    log_file: Annotated[
+        str | None,
+        typer.Option("--log-file", help="Log to file"),
+    ] = None,
 ) -> None:
     """ADR AI Tools - Architecture Decision Records toolkit."""
+    # Configure logging using LoggingService
+    logging_service = LoggingService()
+    logging_service.configure_logging(
+        level="DEBUG" if verbose else "INFO",
+        log_file=Path(log_file) if log_file else None,
+        quiet=quiet,
+    )
 
 
 def main() -> None:
