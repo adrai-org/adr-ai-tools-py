@@ -35,16 +35,16 @@ Reorganize the directory structure to physically reflect the three-layer archite
 ```
 src/adraitools/
 ├── cli/ # CLI Layer (Presentation)
-│ └── __init__.py
+│ ├── __init__.py
 │ └── cli.py
 ├── services/ # Service Layer (Business Logic)
-│ └── __init__.py
+│ ├── __init__.py
 │ └── adr_initializer.py
 └── infrastructure/ # Infrastructure Layer (External Dependencies)
-└── __init__.py
-├── file_system_service.py
-├── user_interaction_service.py
-└── configuration_service.py
+  ├── __init__.py
+  ├── file_system_service.py
+  ├── user_interaction_service.py
+  └── configuration_service.py
 ```
 
 ## Rationale
