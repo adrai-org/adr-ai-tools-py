@@ -42,6 +42,7 @@ src/adraitools/
 │ └── adr_initializer.py
 └── infrastructure/ # Infrastructure Layer (External Dependencies)
   ├── __init__.py
+  ├── constants.py
   ├── file_system_service.py
   ├── user_interaction_service.py
   └── configuration_service.py
