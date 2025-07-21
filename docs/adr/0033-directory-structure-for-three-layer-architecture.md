@@ -49,8 +49,8 @@ src/adraitools/
 
 ## Rationale
 ### Architectural Clarity
-- **Clear Layer Boundaries**: Physical directories match the logical architecture layers
 - **ADR-0015 Compliance**: Directory structure directly reflects the documented architecture decision
+- **Clear Layer Boundaries**: Physical directories match the logical architecture layers
 
 ### Maintainability Benefits
 - **Prevent Layer Violations**: Clear boundaries make it harder to accidentally violate architectural principles
