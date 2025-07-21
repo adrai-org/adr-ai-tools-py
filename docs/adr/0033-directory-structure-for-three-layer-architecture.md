@@ -4,7 +4,7 @@
 Directory Structure for Three-Layer Architecture
 
 ## Status
-Proposed
+Accepted
 
 ## Date
 2025-07-21
