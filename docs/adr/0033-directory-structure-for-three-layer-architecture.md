@@ -97,5 +97,3 @@ src/adraitools/
 
 ## References
 - [ADR-0015: Service Layer Architecture for CLI Commands](./0015-service-layer-architecture-for-cli-commands.md)
-- [Clean Architecture by Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-- [Python Package Structure Best Practices](https://docs.python.org/3/tutorial/modules.html#packages)
