@@ -92,8 +92,6 @@ src/adraitools/
 - **Rejected**: Contradicts existing architectural decisions
 
 ## Future Direction
-- **Import Path Updates**: Update all existing import statements to reflect the new directory structure
-- **Test Verification**: Ensure all existing tests continue to pass after the restructuring
 - **New Command Implementation**: Use this structure as the foundation when implementing future CLI commands (e.g., `new`, `list`, `generate` commands)
 - **Architecture Documentation**: Consider creating developer guidelines that explain how to determine which layer new code belongs in
 
