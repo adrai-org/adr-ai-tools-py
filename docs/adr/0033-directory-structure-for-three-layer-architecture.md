@@ -30,23 +30,38 @@ src/adraitools/
 ```
 
 ## Decision
-Reorganize the directory structure to physically reflect the three-layer architecture defined in ADR-0015:
+Reorganize the directory structure to physically reflect the three-layer architecture defined in ADR-0015 by creating distinct directories for each architectural layer:
 
 ```
 src/adraitools/
-├── cli/ # CLI Layer (Presentation)
-│ ├── __init__.py
-│ └── cli.py
-├── services/ # Service Layer (Business Logic)
-│ ├── __init__.py
-│ └── adr_initializer.py
-└── infrastructure/ # Infrastructure Layer (External Dependencies)
-  ├── __init__.py
-  ├── constants.py
-  ├── file_system_service.py
-  ├── user_interaction_service.py
-  └── configuration_service.py
+├── cli/             # CLI Layer (Presentation)
+├── services/        # Service Layer (Business Logic)
+└── infrastructure/  # Infrastructure Layer (External Dependencies)
 ```
+
+Each layer directory will contain:
+- **CLI Layer**: Command-line interface implementations, argument parsing, and user I/O formatting
+- **Service Layer**: Business logic services that coordinate operations and implement core workflows
+- **Infrastructure Layer**: Services that handle external dependencies, file system operations, configuration, and system interactions
+
+**Example structure** (specific file placement to be determined through individual analysis):
+```
+src/adraitools/
+├── cli/
+│   ├── __init__.py
+│   └── cli.py
+├── services/
+│   ├── __init__.py
+│   └── adr_initializer.py
+└── infrastructure/
+    ├── __init__.py
+    ├── constants.py
+    ├── file_system_service.py
+    ├── user_interaction_service.py
+    └── configuration_service.py
+```
+
+The actual placement of each file will be determined through analysis of each class's responsibilities and dependencies to ensure proper layer assignment based on ADR-0015 criteria.
 
 ## Rationale
 ### Architectural Clarity
@@ -93,6 +108,10 @@ src/adraitools/
 - **Rejected**: Contradicts existing architectural decisions
 
 ## Future Direction
+- **File Classification Analysis**: Conduct individual analysis of each existing file to determine appropriate layer assignment based on responsibilities and dependencies
+- **Migration Planning**: Develop a detailed migration plan after completing the file classification analysis  
+- **Import Path Updates**: Update all existing import statements to reflect the new directory structure
+- **Test Verification**: Ensure all existing tests continue to pass after the restructuring
 - **New Command Implementation**: Use this structure as the foundation when implementing future CLI commands (e.g., `new`, `list`, `generate` commands)
 - **Architecture Documentation**: Consider creating developer guidelines that explain how to determine which layer new code belongs in
 
