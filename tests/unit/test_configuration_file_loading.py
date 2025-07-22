@@ -7,7 +7,7 @@ from tomllib import TOMLDecodeError
 import pytest
 from pytest_mock import MockerFixture
 
-from adraitools.models.configuration import AdrConfiguration
+from adraitools.services.models.configuration import AdrConfiguration
 
 
 def test_configuration_loads_from_project_local_toml_file(

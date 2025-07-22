@@ -2,10 +2,10 @@
 
 from pathlib import Path
 
-from adraitools.models.result import InitializationResult
-from adraitools.services.configuration_service import ConfigurationService
-from adraitools.services.file_system_service import FileSystemService
-from adraitools.services.user_interaction_service import UserInteractionService
+from adraitools.infrastructure.configuration_service import ConfigurationService
+from adraitools.infrastructure.file_system_service import FileSystemService
+from adraitools.infrastructure.user_interaction_service import UserInteractionService
+from adraitools.services.models.result import InitializationResult
 
 
 class AdrInitializer:

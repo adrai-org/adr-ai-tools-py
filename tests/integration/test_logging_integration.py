@@ -4,7 +4,7 @@ import logging
 import tempfile
 from pathlib import Path
 
-from adraitools.services.logging_service import LoggingService
+from adraitools.infrastructure.logging_service import LoggingService
 
 
 class TestLoggingIntegration:

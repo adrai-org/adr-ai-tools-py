@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from adraitools.models.configuration import AdrConfiguration
+from adraitools.services.models.configuration import AdrConfiguration
 from tests.unit.conftest import InitializerTestSetup
 
 

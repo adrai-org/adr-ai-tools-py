@@ -7,13 +7,13 @@ from typing import Annotated
 import typer
 
 from adraitools import __version__
-from adraitools.models.result import InitializationResult
+from adraitools.cli.utils.cli_error_handling import handle_command_errors
+from adraitools.infrastructure.configuration_service import ConfigurationService
+from adraitools.infrastructure.file_system_service import FileSystemService
+from adraitools.infrastructure.logging_service import LoggingService
+from adraitools.infrastructure.user_interaction_service import UserInteractionService
 from adraitools.services.adr_initializer import AdrInitializer
-from adraitools.services.configuration_service import ConfigurationService
-from adraitools.services.file_system_service import FileSystemService
-from adraitools.services.logging_service import LoggingService
-from adraitools.services.user_interaction_service import UserInteractionService
-from adraitools.utils.cli_error_handling import handle_command_errors
+from adraitools.services.models.result import InitializationResult
 
 app = typer.Typer(help="ADR AI Tools - Architecture Decision Records toolkit")
 config_app = typer.Typer(help="Configuration management commands")

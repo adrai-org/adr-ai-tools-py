@@ -19,7 +19,7 @@ dependencies = [
 version = {attr = "adraitools.__version__"}
 
 [project.scripts]
-adr-ai-tools = "adraitools.cli:main"
+adr-ai-tools = "adraitools.cli.cli:main"
 
 [dependency-groups]
 dev = [

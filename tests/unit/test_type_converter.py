@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from adraitools.services.type_converter import TypeConverter
+from adraitools.infrastructure.type_converter import TypeConverter
 
 
 def test_convert_config_value_path_field() -> None:

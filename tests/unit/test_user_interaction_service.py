@@ -2,7 +2,7 @@
 
 from pytest_mock import MockerFixture
 
-from adraitools.services.user_interaction_service import UserInteractionService
+from adraitools.infrastructure.user_interaction_service import UserInteractionService
 
 
 def test_ask_confirmation_returns_true_for_y(mocker: MockerFixture) -> None:

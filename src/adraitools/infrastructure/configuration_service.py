@@ -1,9 +1,9 @@
 """Configuration management service."""
 
-from adraitools.constants import ErrorMessages, PathConstants
-from adraitools.models.configuration import AdrConfiguration
-from adraitools.services.toml_file_handler import TomlFileHandler
-from adraitools.services.type_converter import TypeConverter
+from adraitools.infrastructure.constants import ErrorMessages, PathConstants
+from adraitools.infrastructure.toml_file_handler import TomlFileHandler
+from adraitools.infrastructure.type_converter import TypeConverter
+from adraitools.services.models.configuration import AdrConfiguration
 
 
 class ConfigurationService:
