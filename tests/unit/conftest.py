@@ -6,11 +6,11 @@ from unittest.mock import Mock
 
 import pytest
 
-from adraitools.models.configuration import AdrConfiguration
+from adraitools.infrastructure.configuration_service import ConfigurationService
+from adraitools.infrastructure.file_system_service import FileSystemService
+from adraitools.infrastructure.user_interaction_service import UserInteractionService
 from adraitools.services.adr_initializer import AdrInitializer
-from adraitools.services.configuration_service import ConfigurationService
-from adraitools.services.file_system_service import FileSystemService
-from adraitools.services.user_interaction_service import UserInteractionService
+from adraitools.services.models.configuration import AdrConfiguration
 
 
 class MockServices(NamedTuple):

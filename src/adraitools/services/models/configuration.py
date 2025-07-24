@@ -9,7 +9,7 @@ from pydantic_settings import (
     TomlConfigSettingsSource,
 )
 
-from adraitools.constants import PathConstants
+from adraitools.infrastructure.constants import PathConstants
 
 
 class AdrConfiguration(BaseSettings):

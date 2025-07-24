@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from adraitools.services.toml_file_handler import TomlFileHandler
+from adraitools.infrastructure.toml_file_handler import TomlFileHandler
 
 
 def test_load_config_existing_file(isolated_filesystem: Path) -> None:

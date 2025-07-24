@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import get_origin
 
-from adraitools.models.configuration import AdrConfiguration
+from adraitools.services.models.configuration import AdrConfiguration
 
 T = Path | str | int | float | bool
 

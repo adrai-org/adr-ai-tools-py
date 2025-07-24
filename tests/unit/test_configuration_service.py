@@ -8,8 +8,8 @@ import pytest
 import tomli
 from pytest_mock import MockerFixture
 
-from adraitools.models.configuration import AdrConfiguration
-from adraitools.services.configuration_service import ConfigurationService
+from adraitools.infrastructure.configuration_service import ConfigurationService
+from adraitools.services.models.configuration import AdrConfiguration
 
 
 @pytest.fixture

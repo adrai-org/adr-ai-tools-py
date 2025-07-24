@@ -3,7 +3,7 @@
 import tempfile
 from pathlib import Path
 
-from adraitools.services.file_system_service import FileSystemService
+from adraitools.infrastructure.file_system_service import FileSystemService
 
 
 def test_directory_exists_returns_true_for_existing_directory() -> None:
