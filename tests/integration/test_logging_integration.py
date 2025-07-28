@@ -1,6 +1,7 @@
 """Integration tests for logging functionality."""
 
 import logging
+import re
 import tempfile
 from pathlib import Path
 
@@ -112,7 +113,12 @@ class TestLoggingIntegration:
             assert "INFO" in content
             assert "Format test message" in content
             # Should contain timestamp pattern
-            assert " - " in content
+            timestamp_pattern = (
+                r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3} - INFO: Format test message"
+            )
+            assert re.search(timestamp_pattern, content), (
+                f"Expected timestamp pattern not found in: {content}"
+            )
 
     def test_logging_service_custom_format(self) -> None:
         """Test that custom log format is applied correctly."""
