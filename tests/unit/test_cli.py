@@ -178,3 +178,15 @@ def test_log_file_option_accepted(mocker: MockerFixture) -> None:
     mock_logging_instance.configure_logging.assert_called_once_with(
         level="INFO", log_file=Path("debug.log"), quiet=False
     )
+
+
+def test_doctor_command_accepted(mocker: MockerFixture) -> None:
+    """Test that doctor command is accepted by CLI."""
+    # Arrange
+    runner = CliRunner()
+
+    # Act
+    result = runner.invoke(app, ["doctor", "init"])
+
+    # Assert
+    assert result.exit_code == 0
