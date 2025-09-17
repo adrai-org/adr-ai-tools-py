@@ -84,6 +84,7 @@ testpaths = ["tests", "src"]
 python_files = ["test_*.py", "*_test.py"]
 python_functions = ["test_*"]
 addopts = [
+    "-sv",
     "--strict-markers",
     "--strict-config",
     "--doctest-modules",

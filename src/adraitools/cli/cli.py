@@ -147,7 +147,12 @@ def doctor() -> None:
     configuration_service = ConfigurationService()
     doctor_service = DoctorService(configuration_service=configuration_service)
     result = doctor_service.diagnose()
-    typer.echo(result.message)
+
+    if result.success:
+        typer.echo(result.message)
+    else:
+        typer.echo(result.message)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

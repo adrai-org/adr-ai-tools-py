@@ -11,7 +11,14 @@ class ConfigurationService:
 
     def __init__(self) -> None:
         """Initialize the configuration service."""
-        self.configuration = AdrConfiguration()
+        self._configuration: AdrConfiguration | None = None
+
+    @property
+    def configuration(self) -> AdrConfiguration:
+        """Get the complete configuration."""
+        if self._configuration is None:
+            self._configuration = AdrConfiguration()
+        return self._configuration
 
     def get_configuration(self) -> AdrConfiguration:
         """Get the complete configuration."""

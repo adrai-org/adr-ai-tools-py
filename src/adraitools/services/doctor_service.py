@@ -2,6 +2,7 @@
 
 from pydantic import ValidationError
 
+from adraitools.exceptions import ConfigurationFileCorruptedError
 from adraitools.infrastructure.configuration_service import ConfigurationService
 from adraitools.services.models.result import DiagnosisResult
 
@@ -21,4 +22,8 @@ class DoctorService:
         except ValidationError as e:
             return DiagnosisResult(
                 success=False, message=f"Error during diagnosis: {e.errors()}"
+            )
+        except ConfigurationFileCorruptedError as e:
+            return DiagnosisResult(
+                success=False, message=f"Error during diagnosis: {e}"
             )
