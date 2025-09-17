@@ -13,6 +13,7 @@ from adraitools.infrastructure.file_system_service import FileSystemService
 from adraitools.infrastructure.logging_service import LoggingService
 from adraitools.infrastructure.user_interaction_service import UserInteractionService
 from adraitools.services.adr_initializer import AdrInitializer
+from adraitools.services.doctor_service import DoctorService
 from adraitools.services.models.result import InitializationResult
 
 app = typer.Typer(help="ADR AI Tools - Architecture Decision Records toolkit")
@@ -141,9 +142,12 @@ def set_config(
 
 
 @app.command()
-def doctor(subcommand: str) -> None:
+def doctor() -> None:
     """Run doctor commands."""
-    typer.echo(f"✓ {subcommand}: Configuration is valid")
+    configuration_service = ConfigurationService()
+    doctor_service = DoctorService(configuration_service=configuration_service)
+    result = doctor_service.diagnose()
+    typer.echo(result.message)
 
 
 if __name__ == "__main__":
