@@ -4,7 +4,7 @@ from pytest_mock import MockerFixture
 from typer.testing import CliRunner
 
 from adraitools.cli.cli import app
-from adraitools.services.models.result import DiagnosisResult
+from adraitools.services.models.result import DiagnosisResult, DiagnosisStepResult
 
 
 def test_doctor_command_success(mocker: MockerFixture) -> None:
@@ -15,7 +15,16 @@ def test_doctor_command_success(mocker: MockerFixture) -> None:
     # Mock DoctorService and its dependencies
     mock_doctor_service_class = mocker.patch("adraitools.cli.cli.DoctorService")
     mock_doctor_service = mock_doctor_service_class.return_value
-    success_result = DiagnosisResult(success=True, message="Configuration is valid")
+    success_result = DiagnosisResult(
+        success=True,
+        steps=[
+            DiagnosisStepResult(
+                step_name="CONFIG_VALIDATION",
+                result_level="PASS",
+                message="Configuration is valid",
+            )
+        ],
+    )
     mock_doctor_service.diagnose.return_value = success_result
 
     # Mock ConfigurationService dependency
@@ -26,7 +35,7 @@ def test_doctor_command_success(mocker: MockerFixture) -> None:
 
     # Assert
     assert result.exit_code == 0
-    assert "Configuration is valid" in result.output
+    assert "✅ Configuration Validation: PASS" in result.output
 
     # Verify DoctorService was created with ConfigurationService
     mock_config_service_class.assert_called_once_with()
@@ -46,7 +55,16 @@ def test_doctor_command_invalid_config(mocker: MockerFixture) -> None:
     # Mock DoctorService and its dependencies
     mock_doctor_service_class = mocker.patch("adraitools.cli.cli.DoctorService")
     mock_doctor_service = mock_doctor_service_class.return_value
-    error_result = DiagnosisResult(success=False, message="Invalid configuration")
+    error_result = DiagnosisResult(
+        success=False,
+        steps=[
+            DiagnosisStepResult(
+                step_name="CONFIG_VALIDATION",
+                result_level="FAIL",
+                message="Invalid configuration",
+            )
+        ],
+    )
     mock_doctor_service.diagnose.return_value = error_result
 
     # Mock ConfigurationService dependency
@@ -57,7 +75,7 @@ def test_doctor_command_invalid_config(mocker: MockerFixture) -> None:
 
     # Assert
     assert result.exit_code == 1
-    assert "Invalid configuration" in result.output
+    assert "❌ Configuration Validation: FAIL" in result.output
 
     # Verify DoctorService was created with ConfigurationService
     mock_config_service_class.assert_called_once_with()

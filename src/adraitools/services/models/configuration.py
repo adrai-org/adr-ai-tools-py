@@ -35,7 +35,7 @@ class AdrConfiguration(BaseSettings):
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
         """Customize settings sources to include TOML files."""
-        config_files = []
+        config_files: list[Path] = []
 
         # Project-local configuration (highest precedence)
         project_config = PathConstants.get_local_config_file()
@@ -47,7 +47,7 @@ class AdrConfiguration(BaseSettings):
         if global_config.exists():
             config_files.append(global_config)
 
-        toml_sources = []
+        toml_sources: list[TomlConfigSettingsSource] = []
         for config_file in config_files:
             try:
                 toml_source = TomlConfigSettingsSource(

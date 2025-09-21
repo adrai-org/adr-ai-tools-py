@@ -20,6 +20,8 @@ Examples:
     ValidationError: ...
 """
 
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -36,8 +38,53 @@ class InitializationResult(BaseResultModel):
     message: str = Field(description="Human-readable message describing the result")
 
 
+class DiagnosisStepResult(BaseResultModel):
+    """Result of a single diagnosis step."""
+
+    step_name: Literal["CONFIG_VALIDATION", "LLM_CONNECTION"] = Field(
+        description="Name of the diagnosis step"
+    )
+    result_level: Literal["PASS", "INFO", "WARNING", "FAIL"] = Field(
+        description="Result level of the diagnosis step"
+    )
+    message: str = Field(...)
+
+    @property
+    def display_step_name(self) -> str:
+        """Get a user-friendly name for the diagnosis step."""
+        return {
+            "CONFIG_VALIDATION": "Configuration Validation",
+            "LLM_CONNECTION": "LLM Connection",
+        }[self.step_name]
+
+    @property
+    def display_icon(self) -> str:
+        """Get an icon representing the result level."""
+        return {
+            "PASS": "✅",
+            "INFO": "ℹ️",  # noqa: RUF001
+            "WARNING": "⚠️",
+            "FAIL": "❌",
+        }[self.result_level]
+
+    @property
+    def display_status(self) -> str:
+        """Get a user-friendly status message."""
+        return self.result_level
+
+    @property
+    def display_message(self) -> str:
+        """Get a formatted message for display."""
+        return (
+            f"{self.display_icon} {self.display_step_name}:"
+            f" {self.display_status} ({self.message})"
+        )
+
+
 class DiagnosisResult(BaseResultModel):
     """Result of ADR diagnosis operation."""
 
     success: bool = Field(description="Whether the diagnosis was successful")
-    message: str = Field(description="Human-readable message describing the result")
+    steps: list[DiagnosisStepResult] = Field(
+        description="List of results for each diagnosis step"
+    )

@@ -13,3 +13,4 @@ class ConfigurationFileCorruptedError(BaseError):
     def __init__(self, file_path: Path) -> None:
         """Initialize the exception."""
         super().__init__(f"Configuration file {file_path} is corrupted.")
+        self.file_path = file_path

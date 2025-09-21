@@ -4,7 +4,7 @@ from pydantic import ValidationError
 
 from adraitools.exceptions import ConfigurationFileCorruptedError
 from adraitools.infrastructure.configuration_service import ConfigurationService
-from adraitools.services.models.result import DiagnosisResult
+from adraitools.services.models.result import DiagnosisResult, DiagnosisStepResult
 
 
 class DoctorService:
@@ -18,12 +18,36 @@ class DoctorService:
         """Diagnose the configuration."""
         try:
             self.configuration_service.get_configuration()
-            return DiagnosisResult(success=True, message="Configuration is valid")
+            return DiagnosisResult(
+                success=True,
+                steps=[
+                    DiagnosisStepResult(
+                        step_name="CONFIG_VALIDATION",
+                        result_level="PASS",
+                        message="Configuration is valid",
+                    )
+                ],
+            )
         except ValidationError as e:
             return DiagnosisResult(
-                success=False, message=f"Error during diagnosis: {e.errors()}"
+                success=False,
+                steps=[
+                    DiagnosisStepResult(
+                        step_name="CONFIG_VALIDATION",
+                        result_level="FAIL",
+                        message=f"Error during diagnosis: {e.errors()}",
+                    )
+                ],
             )
         except ConfigurationFileCorruptedError as e:
             return DiagnosisResult(
-                success=False, message=f"Error during diagnosis: {e}"
+                success=False,
+                steps=[
+                    DiagnosisStepResult(
+                        step_name="CONFIG_VALIDATION",
+                        result_level="FAIL",
+                        message="Configuration file is corrupted:"
+                        f" {e.file_path.absolute()}",
+                    )
+                ],
             )

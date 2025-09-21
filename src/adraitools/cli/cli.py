@@ -148,10 +148,10 @@ def doctor() -> None:
     doctor_service = DoctorService(configuration_service=configuration_service)
     result = doctor_service.diagnose()
 
-    if result.success:
-        typer.echo(result.message)
-    else:
-        typer.echo(result.message)
+    for step in result.steps:
+        typer.echo(step.display_message)
+
+    if not result.success:
         sys.exit(1)
 
 

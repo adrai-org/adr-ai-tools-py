@@ -27,7 +27,7 @@ def test_doctor_command_success(
         "uv run adr-ai-tools doctor", cwd=isolated_e2e_env, encoding="utf-8"
     )
 
-    child.expect_exact("Configuration is valid")
+    child.expect_exact("✅ Configuration Validation: PASS")
     child.expect(pexpect.EOF)
     child.close()
 
@@ -51,7 +51,7 @@ def test_doctor_command_invalid_config(
         "uv run adr-ai-tools doctor", cwd=isolated_e2e_env, encoding="utf-8"
     )
 
-    child.expect("Error during diagnosis:")
+    child.expect("❌ Configuration Validation: FAIL")
     child.expect(pexpect.EOF)
     child.close()
 
@@ -73,7 +73,7 @@ def test_doctor_command_corrupted_config(isolated_e2e_env: Path) -> None:
     )
 
     child.expect(
-        f"Error during diagnosis: Configuration file {config_file} is corrupted."
+        r"❌ Configuration Validation: FAIL \(Configuration file is corrupted:"
     )
     child.expect(pexpect.EOF)
     child.close()
