@@ -1,6 +1,7 @@
 """Configuration data models."""
 
 from pathlib import Path
+from tomllib import TOMLDecodeError
 
 from pydantic_settings import (
     BaseSettings,
@@ -9,6 +10,7 @@ from pydantic_settings import (
     TomlConfigSettingsSource,
 )
 
+from adraitools.exceptions import ConfigurationFileCorruptedError
 from adraitools.infrastructure.constants import PathConstants
 
 
@@ -52,8 +54,8 @@ class AdrConfiguration(BaseSettings):
                     settings_cls, toml_file=config_file
                 )
                 toml_sources.append(toml_source)
-            finally:
-                pass
+            except TOMLDecodeError as err:
+                raise ConfigurationFileCorruptedError(file_path=config_file) from err
 
         return (
             init_settings,

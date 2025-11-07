@@ -13,6 +13,7 @@ from adraitools.infrastructure.file_system_service import FileSystemService
 from adraitools.infrastructure.logging_service import LoggingService
 from adraitools.infrastructure.user_interaction_service import UserInteractionService
 from adraitools.services.adr_initializer import AdrInitializer
+from adraitools.services.doctor_service import DoctorService
 from adraitools.services.models.result import InitializationResult
 
 app = typer.Typer(help="ADR AI Tools - Architecture Decision Records toolkit")
@@ -138,6 +139,20 @@ def set_config(
     config_service.set_value(key, value, global_config=global_config)
     scope = "global" if global_config else "project-local"
     typer.echo(f"Configuration updated ({scope}): {key} = {value}")
+
+
+@app.command()
+def doctor() -> None:
+    """Run doctor commands."""
+    configuration_service = ConfigurationService()
+    doctor_service = DoctorService(configuration_service=configuration_service)
+    result = doctor_service.diagnose()
+
+    if result.success:
+        typer.echo(result.message)
+    else:
+        typer.echo(result.message)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

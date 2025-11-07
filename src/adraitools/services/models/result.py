@@ -23,10 +23,21 @@ Examples:
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class InitializationResult(BaseModel):
-    """Result of ADR initialization operation."""
+class BaseResultModel(BaseModel):
+    """Base class for result models."""
 
     model_config = ConfigDict(frozen=True, str_strip_whitespace=True)
 
+
+class InitializationResult(BaseResultModel):
+    """Result of ADR initialization operation."""
+
     success: bool = Field(description="Whether the initialization was successful")
+    message: str = Field(description="Human-readable message describing the result")
+
+
+class DiagnosisResult(BaseResultModel):
+    """Result of ADR diagnosis operation."""
+
+    success: bool = Field(description="Whether the diagnosis was successful")
     message: str = Field(description="Human-readable message describing the result")

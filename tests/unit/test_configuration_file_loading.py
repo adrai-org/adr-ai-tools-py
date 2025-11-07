@@ -2,11 +2,11 @@
 
 import tempfile
 from pathlib import Path
-from tomllib import TOMLDecodeError
 
 import pytest
 from pytest_mock import MockerFixture
 
+from adraitools.exceptions import ConfigurationFileCorruptedError
 from adraitools.services.models.configuration import AdrConfiguration
 
 
@@ -120,5 +120,5 @@ def test_configuration_raises_error_for_invalid_toml_file(
         # Mock current working directory
         mocker.patch("pathlib.Path.cwd", return_value=Path(tmpdir))
         # Should raise error for invalid TOML file (strict validation per ADR-0019)
-        with pytest.raises(TOMLDecodeError):
+        with pytest.raises(ConfigurationFileCorruptedError):
             AdrConfiguration()
